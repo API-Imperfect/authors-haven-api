@@ -9,8 +9,8 @@ services:
             - .:/app:z
             - static_volume:/app/staticfiles
             - media_volume:/app/mediafiles
-        ports:
-            - "8000:8000"
+        expose:
+            - "8000"
         env_file:
             - ./.envs/.local/.django
             - ./.envs/.local/.postgres
@@ -38,6 +38,21 @@ services:
         container_name: mailhog
         ports:
             - "8025:8025"
+        networks:
+            - authors-api
+
+    nginx:
+        restart: always
+        depends_on:
+            - api
+        volumes:
+            - static_volume:/app/staticfiles
+            - media_volume:/app/mediafiles
+        build:
+            context: ./docker/local/nginx
+            dockerfile: Dockerfile
+        ports:
+            - "8080:80"
         networks:
             - authors-api
 

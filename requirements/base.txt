@@ -19,3 +19,5 @@ django-celery-email==3.0.0
 django-allauth==0.52.0
 djangorestframework-simplejwt==5.2.2
 dj-rest-auth==3.0.0
+django-elasticsearch-dsl==7.3.0
+django-elasticsearch-dsl-drf==0.22.5

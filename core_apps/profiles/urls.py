@@ -1,11 +1,12 @@
 from django.urls import path
+
 from .views import (
-    ProfileListAPIView,
-    ProfileDetailAPIView,
-    UpdateProfileAPIView,
-    FollowerListView,
     FollowAPIView,
+    FollowerListView,
+    ProfileDetailAPIView,
+    ProfileListAPIView,
     UnfollowAPIView,
+    UpdateProfileAPIView,
 )
 
 urlpatterns = [

@@ -5,6 +5,7 @@ from django.utils.translation import gettext_lazy as _
 from taggit.managers import TaggableManager
 
 from core_apps.common.models import TimeStampedModel
+
 from .read_time_engine import ArticleReadTimeEngine
 
 User = get_user_model()

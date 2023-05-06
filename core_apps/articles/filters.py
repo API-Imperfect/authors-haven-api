@@ -1,4 +1,5 @@
 import django_filters as filters
+
 from core_apps.articles.models import Article
 
 

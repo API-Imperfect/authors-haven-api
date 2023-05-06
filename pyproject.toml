@@ -1,0 +1,25 @@
+[tool.black]
+line-length = 88
+target-version = ['py311']
+extend-exclude = '''
+(
+  /(
+    \.eggs
+    | \.git
+    | \.mypy_cache
+    | \.envs
+    | \.tox
+    | \.venv
+    | env
+    | venv
+    | build
+  )/
+)
+'''
+
+[tool.isort]
+profile = "black"
+
+[tool.flake8]
+ignore = "E203, E501, W503"
+max-line-length = 120

@@ -1,0 +1,74 @@
+version: "3.9"
+
+services:
+    es:
+        image: elasticsearch:7.17.9
+        environment:
+            - discovery.type=single-node
+        ports:
+            - "9200:9200"
+        networks:
+            - reverseproxy_nw
+    api: &api
+        build:
+            context: .
+            dockerfile: ./docker/production/django/Dockerfile
+        command: /start
+        image: authors_api
+        volumes:
+            - static_volume:/app/staticfiles
+            - media_volume:/app/mediafiles
+        env_file:
+            - ./.envs/.production/.django
+            - ./.envs/.production/.postgres
+        depends_on:
+            - postgres
+            - redis
+            - es
+        networks:
+            - reverseproxy_nw
+
+    postgres:
+        build:
+            context: .
+            dockerfile: ./docker/production/postgres/Dockerfile
+        image: authors_api_database
+        volumes:
+            - production_postgres_data:/var/lib/postgresql/data
+            - production_postgres_data_backups:/backups
+        env_file:
+            - ./.envs/.production/.postgres
+        networks:
+            - reverseproxy_nw
+
+    redis:
+        image: redis:7-alpine
+        networks:
+            - reverseproxy_nw
+
+    celery_worker:
+        <<: *api
+        image: authors_api_celery_worker
+        command: /start-celeryworker
+        networks:
+            - reverseproxy_nw
+
+    flower:
+        <<: *api
+        image: authors_api_flower
+        command: /start-flower
+        volumes:
+            - flower_data:/data
+        networks:
+            - reverseproxy_nw
+
+networks:
+    reverseproxy_nw:
+        external: true
+
+volumes:
+    static_volume: {}
+    media_volume: {}
+    production_postgres_data: {}
+    production_postgres_data_backups: {}
+    flower_data: {}

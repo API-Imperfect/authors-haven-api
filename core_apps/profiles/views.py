@@ -8,7 +8,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from authors_api.settings.local import DEFAULT_FROM_EMAIL
+from authors_api.settings.production import DEFAULT_FROM_EMAIL
 
 from .exceptions import CantFollowYourself
 from .models import Profile

@@ -74,7 +74,7 @@ class FollowerListView(APIView):
             }
             return Response(formatted_response, status=status.HTTP_200_OK)
         except Profile.DoesNotExist:
-            return Response(status=404)
+            return Response(status=status.HTTP_404_NOT_FOUND)
 
 
 class FollowingListView(APIView):
@@ -91,7 +91,7 @@ class FollowingListView(APIView):
             }
             return Response(formatted_response, status=status.HTTP_200_OK)
         except Profile.DoesNotExist:
-            return Response(status=404)
+            return Response(status=status.HTTP_404_NOT_FOUND)
 
 
 class FollowAPIView(APIView):
